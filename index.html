@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>シンプル・ティアリスト</title>
+  <style>
+    :root{
+      --gap: 12px;
+      --card-radius: 8px;
+      --bg: #0f1724;
+      --panel: #0b1220;
+      --muted: #9aa4b2;
+      --accent: #2dd4bf;
+    }
+    html,body { 
+      height:100%; margin:0; 
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif; 
+      background: linear-gradient(180deg,#071026 0%, #071b2b 100%); 
+      color: #e6eef6; 
+    }
+    .wrap { padding:20px; max-width:1000px; margin:0 auto; }
+    header { display:flex; gap:12px; align-items:center; margin-bottom:18px; }
+    header h1 { margin:0; font-size:1.1rem; letter-spacing:0.06em; }
+    .controls { margin-left:auto; display:flex; gap:8px; align-items:center; }
+    .controls input[type="text"]{
+      padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); 
+      background:transparent; color:inherit; min-width:200px;
+    }
+    .controls button {
+      padding:8px 12px; border-radius:8px; border:0; 
+      background:var(--accent); color:#042024; font-weight:600; cursor:pointer;
+    }
+
+    /* --- 縦並びティアリスト --- */
+    .tiers {
+      display: flex;
+      flex-direction: column; /* 縦に積み重ねる */
+      gap: var(--gap);
+    }
+    .tier {
+      display: flex;
+      flex-direction: row; /* ラベルを左、カードを右に */
+      align-items: flex-start;
+      background:rgba(255,255,255,0.03);
+      border-radius:12px;
+      padding:12px;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+    }
+    .tier-header { 
+      min-width: 60px; 
+      display:flex; 
+      flex-direction: column; 
+      align-items:center; 
+      margin-right:12px; 
+    }
+    .tier-title{
+      font-weight:700;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.04);
+      font-size:0.95rem;
+      text-align:center;
+      margin-bottom:4px;
+    }
+    .tier-body {
+      flex:1;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      min-height:60px;
+    }
+
+    .card {
+      padding:8px 10px;
+      border-radius:8px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.04);
+      cursor:grab;
+      user-select:none;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:120px;
+    }
+    .card[draggable="true"]:active { cursor:grabbing; }
+    .card .label { flex:1; }
+    .card .actions { display:flex; gap:6px; }
+    .icon-btn { background:transparent; border:0; color:var(--muted); cursor:pointer; padding:6px; border-radius:6px; }
+    .card.dragging { opacity:0.45; transform:scale(0.98); }
+    .tier.drag-over { outline: 2px dashed rgba(45,212,191,0.35); }
+
+    footer { margin-top:14px; color:var(--muted); font-size:0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>ティアリスト（S / A / B / C / D / E）</h1>
+      <div class="controls">
+        <input id="newItemInput" type="text" placeholder="アイテム名を入力して追加（例: キャラ名 / 装備名）" />
+        <button id="addBtn">追加</button>
+      </div>
+    </header>
+
+    <main>
+      <div id="tiersContainer" class="tiers" aria-live="polite"></div>
+    </main>
+
+    <footer>ドラッグ＆ドロップでカードを移動できます。カード名はクリックで編集、✕で削除。</footer>
+  </div>
+
+  <!-- defer を必ずつける -->
+  <script src="./tierlist.js" defer></script>
+</body>
+</html>
