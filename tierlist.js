@@ -12,7 +12,8 @@
   const initial = [
     {name: "例：強キャラ", tier: "S"},
     {name: "例：使えるキャラ", tier: "A"},
-    {name: "例：普通のキャラ", tier: "C"}
+    {name: "例：普通のキャラ", tier: "C"},
+    {name: "例：微妙なキャラ", tier: "D"}
   ];
 
   // --- ユーティリティ ---
